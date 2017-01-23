@@ -29,3 +29,6 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h
 
 FORMS    += mainwindow.ui
+
+CONFIG+=debug
+CONFIG+=qml_debug
