@@ -5,7 +5,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    w.show();
+    w.setWindowTitle("Data Structure Visualizer");
+    w.showMaximized();
+    //w.show();
 
     return a.exec();
 }
