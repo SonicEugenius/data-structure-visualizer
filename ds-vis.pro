@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-01-23T15:32:26
+# Project created by QtCreator 2017-01-27T17:51:56
 #
 #-------------------------------------------------
 
@@ -27,8 +27,3 @@ SOURCES += main.cpp\
         mainwindow.cpp
 
 HEADERS  += mainwindow.h
-
-FORMS    += mainwindow.ui
-
-CONFIG+=debug
-CONFIG+=qml_debug
