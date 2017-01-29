@@ -32,7 +32,7 @@ private:
     QPushButton *popButton;
     QPushButton *enqueueButton;
     QPushButton *dequeueButton;
-    QPushButton *refreshButton;
+    QPushButton *drawButton;
     QPushButton *clearButton;
     QLineEdit *pushValue;
     QLineEdit *popValue;
@@ -43,8 +43,10 @@ private:
 
 private slots:
     //void slotDraw();
-   // void slotPush(float value);
-    //float slotPop();
+    void slotPush();
+    void slotPop();
+    void slotEnqueue();
+    void slotDequeue();
     void slotClear();
     void slotInitDS();
 };

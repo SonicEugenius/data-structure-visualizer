@@ -40,17 +40,17 @@ void MainWindow::createUI() {
     toolsLayout->addLayout(pushLayout);
     popButton = new QPushButton("Pop");
     dequeueButton = new QPushButton("Dequeue");
-    refreshButton = new QPushButton("Refresh");
+    drawButton = new QPushButton("Draw");
     clearButton = new QPushButton("Clear");
     popButton->setFixedSize(100, 30);
     enqueueButton->setFixedSize(100, 30);
     dequeueButton->setFixedSize(100, 30);
-    refreshButton->setFixedSize(100, 30);
+    drawButton->setFixedSize(100, 30);
     clearButton->setFixedSize(100, 30);
 
     toolsLayout->addWidget(popButton);
     toolsLayout->addWidget(dequeueButton);
-    toolsLayout->addWidget(refreshButton);
+    toolsLayout->addWidget(drawButton);
     toolsLayout->addWidget(clearButton);
 
     spacer_2 = new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -71,7 +71,7 @@ void MainWindow::createUI() {
     toolsLayout->setAlignment(selectButton, Qt::AlignCenter);
     toolsLayout->setAlignment(popButton, Qt::AlignCenter);
     toolsLayout->setAlignment(dequeueButton, Qt::AlignCenter);
-    toolsLayout->setAlignment(refreshButton, Qt::AlignCenter);
+    toolsLayout->setAlignment(drawButton, Qt::AlignCenter);
     toolsLayout->setAlignment(clearButton, Qt::AlignCenter);
     QHBoxLayout *wrapper = new QHBoxLayout;
     wrapper->addWidget(text);
@@ -84,7 +84,7 @@ void MainWindow::createUI() {
     valueLabel->setVisible(false);
     popValue->setVisible(false);
     pushValue->setVisible(false);
-    refreshButton->setVisible(false);
+    drawButton->setVisible(false);
     clearButton->setVisible(false);
 
     mainLayout->addLayout(wrapper, 0, 0);
@@ -117,11 +117,48 @@ void MainWindow::slotInitDS() {
     }
     typeBox->setEnabled(false);
     selectButton->setVisible(false);
-    refreshButton->setVisible(true);
+    drawButton->setVisible(true);
     clearButton->setVisible(true);
     pushValue->setVisible(true);
+    pushValue->setFocus();
     valueLabel->setVisible(true);
     popValue->setVisible(true);
+
+    popButton->setEnabled(false);
+    dequeueButton->setEnabled(false);
+
+    connect(pushButton, SIGNAL(clicked()), this, SLOT(slotPush()));
+    connect(popButton, SIGNAL(clicked()), this, SLOT(slotPop()));
+    connect(enqueueButton, SIGNAL(clicked()), this, SLOT(slotEnqueue()));
+    connect(dequeueButton, SIGNAL(clicked()), this, SLOT(slotDequeue()));
+}
+
+void MainWindow::slotPush() {
+    float value = pushValue->text().toFloat();
+    stack->push(value);
+    if (!stack->isEmpty()) popButton->setEnabled(true);
+    pushValue->clear();
+    pushValue->setFocus();
+}
+
+void MainWindow::slotPop() {
+    float value = stack->pop();
+     popValue->setText(QString().number(value));
+     if (stack->isEmpty()) popButton->setEnabled(false);
+}
+
+void MainWindow::slotEnqueue() {
+    float value = pushValue->text().toFloat();
+    queue->enqueue(value);
+    if (!queue->isEmpty()) dequeueButton->setEnabled(true);
+    pushValue->clear();
+    pushValue->setFocus();
+}
+
+void MainWindow::slotDequeue() {
+    float value = queue->dequeue();
+    popValue->setText(QString().number(value));
+    if (queue->isEmpty()) dequeueButton->setEnabled(false);
 }
 
 void MainWindow::slotClear() {
