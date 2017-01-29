@@ -9,6 +9,8 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QTextBrowser>
+#include <QStack>
+#include <QQueue>
 
 class MainWindow : public QMainWindow
 {
@@ -25,21 +27,26 @@ public:
 private:
     QComboBox *typeBox;
     QLabel *valueLabel;
+    QPushButton *selectButton;
     QPushButton *pushButton;
     QPushButton *popButton;
+    QPushButton *enqueueButton;
+    QPushButton *dequeueButton;
     QPushButton *refreshButton;
     QPushButton *clearButton;
     QLineEdit *pushValue;
     QLineEdit *popValue;
-    QSpacerItem *spacer;
+    QSpacerItem *spacer_1, *spacer_2;
     QTextBrowser *text;
+    QStack<float> *stack;
+    QQueue<float> *queue;
 
 private slots:
-   /* void slotDraw();
-    void slotPush(float value);
-    float slotPop();
+    //void slotDraw();
+   // void slotPush(float value);
+    //float slotPop();
     void slotClear();
-    void initDS();*/
+    void slotInitDS();
 };
 
 #endif // MAINWINDOW_H
