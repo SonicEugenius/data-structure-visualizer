@@ -3,6 +3,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QTextBrowser>
+#include <QTextCursor>
 #include <QString>
 
 void MainWindow::createUI() {
@@ -13,7 +14,7 @@ void MainWindow::createUI() {
 
     QVBoxLayout *toolsLayout = new QVBoxLayout;
     typeBox = new QComboBox;
-    typeBox->addItems({"Stack", "Queue"/*, "Binary tree", "Red-black tree"*/});
+    typeBox->addItems({"Stack", "Queue"/*, "Binary search tree", "Red-black tree"*/});
     typeBox->setFixedWidth(200);
     toolsLayout->addWidget(typeBox);
 
@@ -40,17 +41,14 @@ void MainWindow::createUI() {
     toolsLayout->addLayout(pushLayout);
     popButton = new QPushButton("Pop");
     dequeueButton = new QPushButton("Dequeue");
-    drawButton = new QPushButton("Draw");
     clearButton = new QPushButton("Clear");
     popButton->setFixedSize(100, 30);
     enqueueButton->setFixedSize(100, 30);
     dequeueButton->setFixedSize(100, 30);
-    drawButton->setFixedSize(100, 30);
     clearButton->setFixedSize(100, 30);
 
     toolsLayout->addWidget(popButton);
     toolsLayout->addWidget(dequeueButton);
-    toolsLayout->addWidget(drawButton);
     toolsLayout->addWidget(clearButton);
 
     spacer_2 = new QSpacerItem(1, 1, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -66,12 +64,13 @@ void MainWindow::createUI() {
     toolsLayout->addLayout(popLayout);
 
     text = new QTextBrowser;
+    text->setReadOnly(true);
+    text->setFontPointSize(16);
 
     toolsLayout->setContentsMargins(15, 20, 15, 20);
     toolsLayout->setAlignment(selectButton, Qt::AlignCenter);
     toolsLayout->setAlignment(popButton, Qt::AlignCenter);
     toolsLayout->setAlignment(dequeueButton, Qt::AlignCenter);
-    toolsLayout->setAlignment(drawButton, Qt::AlignCenter);
     toolsLayout->setAlignment(clearButton, Qt::AlignCenter);
     QHBoxLayout *wrapper = new QHBoxLayout;
     wrapper->addWidget(text);
@@ -84,7 +83,6 @@ void MainWindow::createUI() {
     valueLabel->setVisible(false);
     popValue->setVisible(false);
     pushValue->setVisible(false);
-    drawButton->setVisible(false);
     clearButton->setVisible(false);
 
     mainLayout->addLayout(wrapper, 0, 0);
@@ -103,12 +101,10 @@ void MainWindow::slotInitDS() {
     int type = typeBox->currentIndex();
     switch (type) {
     case 0: stack = new QStack<float>;
-        //text->setText("Stack");
         pushButton->setVisible(true);
         popButton->setVisible(true);
         break;
     case 1: queue = new QQueue<float>;
-        //text->setText("Queue");
         enqueueButton->setVisible(true);
         dequeueButton->setVisible(true);
         break;
@@ -117,7 +113,6 @@ void MainWindow::slotInitDS() {
     }
     typeBox->setEnabled(false);
     selectButton->setVisible(false);
-    drawButton->setVisible(true);
     clearButton->setVisible(true);
     pushValue->setVisible(true);
     pushValue->setFocus();
@@ -139,6 +134,13 @@ void MainWindow::slotPush() {
     if (!stack->isEmpty()) popButton->setEnabled(true);
     pushValue->clear();
     pushValue->setFocus();
+    QString txtBuff = text->toPlainText();
+    text->clear();
+    text->append(QString().number(value));
+    text->setAlignment(Qt::AlignCenter);
+    text->setTextColor("black");
+    text->append(txtBuff);
+    text->setTextColor("green");
 }
 
 void MainWindow::slotPop() {
@@ -153,6 +155,13 @@ void MainWindow::slotEnqueue() {
     if (!queue->isEmpty()) dequeueButton->setEnabled(true);
     pushValue->clear();
     pushValue->setFocus();
+    QString txtBuff = text->toPlainText();
+    text->clear();
+    text->append(QString().number(value));
+    text->setAlignment(Qt::AlignCenter);
+    text->setTextColor("black");
+    text->append(txtBuff);
+    text->setTextColor("green");
 }
 
 void MainWindow::slotDequeue() {
