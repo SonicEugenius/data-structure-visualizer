@@ -11,12 +11,16 @@
 #include <QTextBrowser>
 #include <QStack>
 #include <QQueue>
+#include <QString>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
         QWidget *centralWidget;
         QGridLayout *mainLayout;
+        QString popBuff;
+        QString dequeueBuff;
+        QString deqTextBuff;
 
 public:
     MainWindow(QWidget *parent = 0);
