@@ -108,7 +108,7 @@ void MainWindow::slotInitDS() {
     case 1: queue = new QQueue<float>;
         enqueueButton->setVisible(true);
         dequeueButton->setVisible(true);
-        //text->append("\n");
+        text->append("\n");
         dequeueBuff = "";
         deqTextBuff = "";
         break;
@@ -136,14 +136,14 @@ void MainWindow::slotPush() {
     float value = pushValue->text().toFloat();
     stack->push(value);
     if (!stack->isEmpty()) popButton->setEnabled(true);
+    popBuff.insert(0, QString().number(value) + '\n');
     pushValue->clear();
     pushValue->setFocus();
-    QString txtBuff = text->toPlainText();
     text->clear();
-    text->append(QString().number(value));
+    text->setText("\n");
     text->setAlignment(Qt::AlignCenter);
-    text->append(txtBuff);
-    popBuff.insert(0, QString().number(value) + '\n');
+    text->append(popBuff);
+    text->setAlignment(Qt::AlignCenter);
 }
 
 void MainWindow::slotPop() {
@@ -154,8 +154,10 @@ void MainWindow::slotPop() {
      r++;
      popBuff.remove(0, r);
      text->clear();
+     text->setText("\n");
      text->setTextColor("red");
-     text->setText(QString().number(value));
+     text->setAlignment(Qt::AlignCenter);
+     text->append(QString().number(value));
      text->setAlignment(Qt::AlignCenter);
      text->setTextColor("black");
      text->append(popBuff);
@@ -180,7 +182,7 @@ void MainWindow::slotDequeue() {
     int r = QString().number(value).length();
     r++;
     dequeueBuff.remove(0, r);
-
+    deqTextBuff.append("\n");
     text->clear();
     text->setText(deqTextBuff);
     text->setTextColor("red");
@@ -190,7 +192,7 @@ void MainWindow::slotDequeue() {
     text->setTextColor("black");
     text->append(dequeueBuff);
     text->setAlignment(Qt::AlignCenter);
-    deqTextBuff.append("\n");
+
 }
 
 void MainWindow::slotClear() {
